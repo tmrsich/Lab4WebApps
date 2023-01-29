@@ -1,0 +1,47 @@
+#full-inventory-table {
+    margin: -5% auto;
+    z-index: -1;
+}
+
+#inventory-table {
+    margin: 10rem auto;
+    width: 60%;
+    border: 5px solid;
+    display: flex;
+}
+
+th, td {
+    text-align: center;
+    border-bottom: 1px solid;
+    z-index: -5;
+}
+
+.div-infoedit-button-primary {
+    display: block;
+    width: 17.5% !important;
+    position: absolute;
+    left: 11.5%;
+    margin-top: -22.5%;
+}
+
+.div-delete-button-primary {
+    display: block;
+    width: 17.5% !important;
+    position: absolute;
+    left: 80.5%;
+    margin-top: -22.5%;
+}
+
+.infoedit-button {
+    display: block;
+    width: 45%;
+}
+
+.delete-button {
+    display: block;
+    width: 45%;
+}
+
+.infoedit-button + .infoedit-button, .delete-button + .delete-button {
+    margin-top: 17px;
+}
