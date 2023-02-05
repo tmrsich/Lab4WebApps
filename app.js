@@ -5,6 +5,10 @@ const app = express();
 const port = 8080;
 const db = require('./db/db_connection');
 
+// Configure Express to use EJS
+app.set( "views",  __dirname + "/views");
+app.set( "view engine", "ejs" );
+
 // define middleware that logs all incoming requests
 app.use(logger("dev"));
 
@@ -13,9 +17,8 @@ app.use(express.static(__dirname + '/public'));
 
 // define a route for the default home page
 app.get( "/", ( req, res ) => {
-    res.sendFile( __dirname + "/views/homepage.html" );
+    res.render("homepage");
 } );
-
 
 const read_inventory_sql = `
     SELECT 
@@ -42,19 +45,18 @@ const read_assignment_sql = `
     WHERE
         item_id = ?
 `
-app.get( "/inventory/details/:id", ( req, res, next ) => {
+app.get( "/inventory/details/:id", ( req, res ) => {
     db.execute(read_assignment_sql, [req.params.id], (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
         else if (results.length == 0)
             res.status(404).send(`No item found with id = "${req.params.id}"`); // Not found error
-        else
-            res.send(results[0]); // results is still an array
+        else {
+            let data = results[0]; // results are still in an array
+            res.render("details", data);
+        }
     });
 });
-
-
-
 
 // start the server
 app.listen( port, () => {
