@@ -17,15 +17,15 @@ app.get( "/", ( req, res ) => {
 } );
 
 
-const read_item_sql = `
+const read_inventory_sql = `
     SELECT 
-        *
+        class_name, assignment_name, due_date, priority_rating
     FROM
         Item
 `
 // define a route for the inventory page
 app.get( "/inventory", ( req, res ) => {
-    db.execute(read_item_sql, (error, results) => {
+    db.execute(read_inventory_sql, (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
         else
@@ -34,9 +34,27 @@ app.get( "/inventory", ( req, res ) => {
 });
 
 // define a route for the item detail page
-app.get( "/inventory/details", ( req, res ) => {
-    res.sendFile( __dirname + "/views/details.html" );
-} );
+const read_assignment_sql = `
+    SELECT 
+        *
+    FROM
+        Item
+    WHERE
+        item_id = ?
+`
+app.get( "/inventory/details/:id", ( req, res, next ) => {
+    db.execute(read_assignment_sql, [req.params.id], (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else if (results.length == 0)
+            res.status(404).send(`No item found with id = "${req.params.id}"`); // Not found error
+        else
+            res.send(results[0]); // results is still an array
+    });
+});
+
+
+
 
 // start the server
 app.listen( port, () => {
