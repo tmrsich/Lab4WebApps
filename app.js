@@ -3,7 +3,7 @@ const express = require( "express" );
 const logger = require("morgan");
 const app = express();
 const port = 8080;
-
+const db = require('./db/db_connection');
 
 // define middleware that logs all incoming requests
 app.use(logger("dev"));

@@ -13,7 +13,7 @@ const create_itemtable_sql = `
         class_name VARCHAR(45) NOT NULL,
         due_date DATE NOT NULL,
         priority_rating TINYINT NOT NULL,
-        description VARCHAR(45) NULL,
+        description VARCHAR(100) NULL,
         PRIMARY KEY (item_id)
     );
 `
