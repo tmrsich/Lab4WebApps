@@ -4,6 +4,7 @@ const logger = require("morgan");
 const app = express();
 const port = 8080;
 
+
 // define middleware that logs all incoming requests
 app.use(logger("dev"));
 
@@ -15,10 +16,22 @@ app.get( "/", ( req, res ) => {
     res.sendFile( __dirname + "/views/homepage.html" );
 } );
 
-// define a route for the stuff inventory page
+
+const read_item_sql = `
+    SELECT 
+        *
+    FROM
+        Item
+`
+// define a route for the inventory page
 app.get( "/inventory", ( req, res ) => {
-    res.sendFile( __dirname + "/views/inventory.html" );
-} );
+    db.execute(read_item_sql, (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else
+            res.send(results);
+    });
+});
 
 // define a route for the item detail page
 app.get( "/inventory/details", ( req, res ) => {
