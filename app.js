@@ -58,6 +58,11 @@ app.get( "/inventory/details/:id", ( req, res ) => {
     });
 });
 
+// define a route for the individual assignment page
+app.get( "/inventory/assignment", ( req, res ) => {
+    res.render("assignment");
+} );
+
 // start the server
 app.listen( port, () => {
     console.log(`App server listening on ${ port }. (Go to http://localhost:${ port })` );
