@@ -19,7 +19,7 @@
        display: block;
        z-index: 0;
    }
-
+   
    div {
     width: 100%;
    }
@@ -38,24 +38,20 @@
    }
    
    .nav-links{
-       margin: auto;
+       margin: 20px auto;
        font-size: 40px;
        font-family: Tahoma;
        font-weight: bold;
+       text-align: center;
    }
-   
-   .navigation-icons-bar {
-       display: flex;
-       left: 20%;
-       position: fixed;
-       margin-top: 72.5px;
-       width: 60%;
-       height: 25px;
-       z-index: 1;
+
+   .nav-href {
+       display: block;
+       margin-bottom: -10px;
    }
 
    .nav-icons {
-       position: relative;
+       height: 25px;
    }
    
    .nav-href:hover {
