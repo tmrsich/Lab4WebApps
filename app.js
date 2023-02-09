@@ -26,7 +26,13 @@ const read_inventory_sql = `
     FROM
         Item
 `
+
 // define a route for the inventory page
+app.get("/inventory", ( req, res ) => {
+    res.render("inventory");
+} );
+
+/* define a route for the inventory page
 app.get( "/inventory", ( req, res ) => {
     db.execute(read_inventory_sql, (error, results) => {
         if (error)
@@ -34,29 +40,12 @@ app.get( "/inventory", ( req, res ) => {
         else
             res.send(results);
     });
-});
+}); */
 
-// define a route for the item detail page
-const read_assignment_sql = `
-    SELECT 
-        *
-    FROM
-        Item
-    WHERE
-        item_id = ?
-`
-app.get( "/inventory/details/:id", ( req, res ) => {
-    db.execute(read_assignment_sql, [req.params.id], (error, results) => {
-        if (error)
-            res.status(500).send(error); //Internal Server Error
-        else if (results.length == 0)
-            res.status(404).send(`No item found with id = "${req.params.id}"`); // Not found error
-        else {
-            let data = results[0]; // results are still in an array
-            res.render("details", data);
-        }
-    });
-});
+// define a route for the default home page
+app.get( "/inventory/details", ( req, res ) => {
+    res.render("details");
+} );
 
 // start the server
 app.listen( port, () => {
