@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/styles/allstyles.css">
+    <link rel="stylesheet" href="/styles/detailstyles/details-table.css">
+    <link rel="stylesheet" href="/styles/detailstyles/modal-styles.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <title>Details</title>
+</head>
+
+
+
+    <button id="button1">Button 1</button>
+    <button id="button2">Button 2</button>
+    <button id="button3">Button 3</button>
+    
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="modalContent">Modal content goes here...</p>
+      </div>
+    </div>
+    
+<script>
+
+    // Get the modal elements
+    var modal = document.getElementById("myModal");
+    var modalContent = document.getElementById("modalContent");
+    var span = document.getElementsByClassName("close")[0];
+    
+    // Get the buttons
+    var button1 = document.getElementById("button1");
+    var button2 = document.getElementById("button2");
+    var button3 = document.getElementById("button3");
+    
+    // Add click event listeners to the buttons
+    button1.addEventListener("click", function() {
+      fetchData(1);
+    });
+    
+    button2.addEventListener("click", function() {
+      fetchData(2);
+    });
+    
+    button3.addEventListener("click", function() {
+      fetchData(3);
+    });
+    
+    // Fetch the data from the server
+    function fetchData(buttonId) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/getData?buttonId=" + buttonId, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          modalContent.innerHTML = response.data;
+          modal.style.display = "block";
+        }
+      };
+      xhr.send();
+    }
+    
+    // Add click event listener to close the modal
+    span.addEventListener("click", function() {
+      modal.style.display = "none";
+    });
+    
+    // Close the modal when clicking outside of it
+    window.addEventListener("click", function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    });
+</script>
+
+
+
+</html>

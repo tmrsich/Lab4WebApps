@@ -26,15 +26,16 @@ const read_inventory_sql = `
     FROM
         Item
 `
-// define a route for the inventory page
+// define a route for the stuff inventory page
 app.get( "/inventory", ( req, res ) => {
     db.execute(read_inventory_sql, (error, results) => {
-        if (error)
-            res.status(500).send(error); //Internal Server Error
-        else
-            res.send(results);
+        if (error) {
+            res.status(500).send(error); // Internal Server Error
+        } else {
+            res.render('inventory', {inventory : results })
+        }
     });
-});
+} );
 
 // define a route for the item detail page
 const read_assignment_sql = `
@@ -45,23 +46,21 @@ const read_assignment_sql = `
     WHERE
         item_id = ?
 `
+// define a route for the item detail page
 app.get( "/inventory/details/:id", ( req, res ) => {
     db.execute(read_assignment_sql, [req.params.id], (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
         else if (results.length == 0)
-            res.status(404).send(`No item found with id = "${req.params.id}"`); // Not found error
+            res.status(404).send(`No item found with id = "${req.params.id}"` ); // NOT FOUND
         else {
-            let data = results[0]; // results are still in an array
-            res.render("details", data);
+            let data = results[0]; // results is still an array
+            // data's object structure: 
+            //  { item: ___ , quantity:___ , description: ____ }
+            res.render('details', data);
         }
     });
 });
-
-// define a route for the individual assignment page
-app.get( "/inventory/assignment", ( req, res ) => {
-    res.render("assignment");
-} );
 
 // start the server
 app.listen( port, () => {
