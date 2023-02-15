@@ -21,7 +21,7 @@ app.get( "/", ( req, res ) => {
 } );
 
 const read_inventory_sql = `
-    SELECT 
+    SELECT
         item_id,
         class_name, assignment_name, assignment_type, assignment_format,
         due_date, priority_rating, interest_level, relevance_level,
