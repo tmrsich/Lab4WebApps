@@ -22,7 +22,9 @@ app.get( "/", ( req, res ) => {
 
 const read_inventory_sql = `
     SELECT 
-        class_name, assignment_name, due_date, priority_rating
+        class_name, assignment_name, assignment_type, assignment_format,
+        due_date, priority_rating, interest_level, relevance_level,
+        description
     FROM
         Item
 `
@@ -41,7 +43,9 @@ app.get( "/inventory", ( req, res ) => {
 // define a route for the item detail page
 const read_assignment_sql = `
     SELECT 
-        *
+    class_name, assignment_name, assignment_type, assignment_format,
+    due_date, priority_rating, interest_level, relevance_level,
+    description
     FROM
         Item
     WHERE
