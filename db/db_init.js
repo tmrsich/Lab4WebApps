@@ -26,13 +26,14 @@ db.execute(create_itemtable_sql);
 // Adds some sample items
 const insert_itemtable_sql = `
     INSERT INTO Item
-        (item_id, class_name, assignment_name, assignment_type, assignment_format, due_date, priority_rating, interest_level, relevance_level, description)
+        (class_name, assignment_name, assignment_type, assignment_format, due_date, priority_rating, interest_level, relevance_level, description)
     VALUES
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        (?, ?, ?, ?, ?, ?, ?, ?, ?);
 `
-db.execute(insert_itemtable_sql, ["1", "Web Apps", "Lab 1", "Lab", "Practical", "01-06-2023", "5", "8", "3", "Finish details table and styles"]);
-db.execute(insert_itemtable_sql, ["2", "Theory of Knowledge", "Extended Essay", "Essay", "Research", "06-09-2024", "1", "5", "8", "Find sources and complete annotated bibliography"]);
-db.execute(insert_itemtable_sql, ["3", "AP Calculus AB", "Optimization Test Retake", "Test", "Written", "01-08-2023", "10", "2", "2", "Study optimization and related rates (extra attention to formulas)"]);
+db.execute(insert_itemtable_sql, ["Web Apps", "Lab 1", "Lab", "Practical", "01-06-2023", "5", "8", "3", "Finish details table and styles"]);
+db.execute(insert_itemtable_sql, ["Theory of Knowledge", "Extended Essay", "Essay", "Research", "06-09-2024", "1", "5", "8", "Find sources and complete annotated bibliography"]);
+db.execute(insert_itemtable_sql, ["AP Calculus AB", "Optimization Test Retake", "Test", "Written", "01-08-2023", "10", "2", "2", "Study optimization and related rates (extra attention to formulas)"]);
+db.execute(insert_itemtable_sql, ["Web Apps", "Lab 4", "Lab", "Practical", "02-05-2023", "3", "10", "3", ""]);
 
 // Reads the sample items inserted
 const read_itemtable_sql = "SELECT * FROM Item";
