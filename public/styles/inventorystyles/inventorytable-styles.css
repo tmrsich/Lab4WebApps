@@ -1,10 +1,16 @@
-#full-inventory-table {
-    margin: -5% auto;
-    z-index: -1;
+* {
+    --top_margin: -0.4%;
+    --infoedit-left_margin: -8.25%;
+    --delete-left_margin: 60.15%;
+}
+
+body {
+    height: 100%;
 }
 
 #inventory-table {
-    margin: 10rem auto;
+    margin: -5% auto;
+    z-index: -1;
     width: 60%;
     border: 5px solid;
     display: flex;
@@ -16,32 +22,44 @@ th, td {
     z-index: -5;
 }
 
-.div-infoedit-button-primary {
-    display: block;
-    width: 17.5% !important;
-    position: absolute;
-    left: 11.5%;
-    margin-top: -22.5%;
-}
-
-.div-delete-button-primary {
-    display: block;
-    width: 17.5% !important;
-    position: absolute;
-    left: 80.5%;
-    margin-top: -22.5%;
-}
-
 .infoedit-button {
     display: block;
-    width: 45%;
+    position: absolute;
+    width: 7%;
+    margin-top: var(--top_margin);
+    margin-left: var(--infoedit-left_margin);
+    font-size: 75%;
+}
+
+.infoedit-button + .infoedit-button, .delete-button + .delete-button {
+    margin-top: 47.5px;
 }
 
 .delete-button {
     display: block;
-    width: 45%;
+    position: absolute;
+    width: 7%;
+    margin-top: var(--top_margin);
+    margin-left: var(--delete-left_margin);
+    font-size: 75%;
 }
 
-.infoedit-button + .infoedit-button, .delete-button + .delete-button {
-    margin-top: 17px;
+@media (max-width: 1368px) {
+    .infoedit-button {
+        font-size: 60%;
+    }
+
+    .delete-button {
+        font-size: 60%;
+    }
+}
+
+@media (max-width: 1150px) {
+    .infoedit-button {
+        font-size: 40%;
+    }
+
+    .delete-button {
+        font-size: 40%;
+    }
 }
