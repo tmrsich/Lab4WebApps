@@ -17,7 +17,7 @@ const create_itemtable_sql = `
         priority_rating TINYINT NOT NULL,
         interest_level TINYINT,
         relevance_level TINYINT,
-        description VARCHAR(100) NULL,
+        description VARCHAR(200) NULL,
         PRIMARY KEY (item_id)
     );
 `
