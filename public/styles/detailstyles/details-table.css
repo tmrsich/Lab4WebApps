@@ -1,37 +1,33 @@
 * {
     color: var(--table-white-color);
+    --edit_top-margin: 2.125%;
+    --edit_left-margin: -8.5%;
 }
 
 #full-inventory-table {
     margin-top: 10%;
-    position: relative;
-    right: -4.5%;
 }
 
 #inventory-table {
-    margin: 10rem auto;
+    display: block;
+    position: relative;
+    left: 7.5%;
     width: 85%;
     border: 5px solid;
-    display: flex;
-    z-index: -1;
+    margin-bottom: 1%;
+    z-index: 1;
 }
 
 th, td {
     text-align: center;
     border-bottom: 1px solid;
-    z-index: -1;
-}
-
-.div-moreedit-button {
-    display: block;
-    width: 8.5% !important;
-    position: absolute;
-    left: 3%;
-    margin-top: -26%;
     z-index: 1;
 }
 
 #moreedit-button {
     display: block;
-    margin-top: 17px;
+    position: absolute;
+    margin-top: var(--edit_top-margin);
+    margin-left: var(--edit_left-margin);
+    z-index: 5;
 }

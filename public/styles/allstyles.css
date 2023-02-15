@@ -3,7 +3,7 @@
     --nav-background-color: #5B84B1FF;
     --nav-link-color: #ffd284;
     --table-white-color: #eeeeee;
-    --modal-color: #425e80;
+    --modal-color: #375f8f;
    }
    
    * {
@@ -34,7 +34,7 @@
        background-color: var(--nav-background-color);
        border-radius: 10px;
        justify-content: center;
-       z-index: 0;
+       z-index: 1;
    }
    
    .nav-links{

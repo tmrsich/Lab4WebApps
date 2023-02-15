@@ -1,4 +1,5 @@
 .modal {
+    margin-top: 5%;
     width: 90%;
     background-color: var(--modal-color);
     border-radius: 20px;
