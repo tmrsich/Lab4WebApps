@@ -22,6 +22,7 @@ app.get( "/", ( req, res ) => {
 
 const read_inventory_sql = `
     SELECT 
+        item_id,
         class_name, assignment_name, assignment_type, assignment_format,
         due_date, priority_rating, interest_level, relevance_level,
         description
@@ -42,10 +43,12 @@ app.get( "/inventory", ( req, res ) => {
 
 // define a route for the item detail page
 const read_assignment_sql = `
-    SELECT 
+    SELECT
+    item_id,
     class_name, assignment_name, assignment_type, assignment_format,
     due_date, priority_rating, interest_level, relevance_level,
     description
+
     FROM
         Item
     WHERE
@@ -60,8 +63,6 @@ app.get( "/inventory/details/:id", ( req, res ) => {
             res.status(404).send(`No item found with id = "${req.params.id}"` ); // NOT FOUND
         else {
             let data = results[0]; // results is still an array
-            // data's object structure: 
-            //  { item: ___ , quantity:___ , description: ____ }
             res.render('details', data);
         }
     });
