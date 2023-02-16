@@ -28,7 +28,7 @@ const read_inventory_sql = `
     SELECT
         item_id,
         class_name, assignment_name, assignment_type, assignment_format,
-        DATE_FORMAT(due_date, "%m-%d-%Y") AS "due_date", priority_rating, interest_level, relevance_level,
+        due_date, priority_rating, interest_level, relevance_level,
         description
     FROM
         Item
@@ -50,7 +50,7 @@ const read_assignment_sql = `
     SELECT
     item_id,
     class_name, assignment_name, assignment_type, assignment_format,
-    DATE_FORMAT(due_date, "%m-%d-%Y") AS "due_date", priority_rating, interest_level, relevance_level,
+    due_date, priority_rating, interest_level, relevance_level,
     description
 
     FROM
@@ -92,26 +92,6 @@ app.get("/inventory/details/:item_id/delete", (req, res) => {
     });
 })
 
-// query to create entries on the inventory page using the form
-const create_inventory_sql = `
-    INSERT INTO Item
-        (class_name, assignment_name, due_date, priority_rating)
-    VALUES
-        (?, ?, STR_TO_DATE(?, "%Y-%m-%d"), ?)
-`
-
-// defines a POST request to create entries in the database
-app.post("/inventory", (req, res) => {
-    db.execute(create_inventory_sql, [req.body.class_name, req.body.assignment_name, req.body.due_date, req.body.priority_rating], (error, results) => {
-        if (error)
-            res.status(500).send(error); //Internal Server Error
-        else {
-            //results.insertId has the primary key (id) of the newly inserted element.
-            res.redirect(`/inventory/details/${results.insertId}`);
-        }
-    });
-})
-
 // query to update entries on both the inventory and details page
 const update_inventory_sql = `
     UPDATE
@@ -148,6 +128,26 @@ app.post("/inventory/details/:item_id", (req, res) => {
             res.status(500).send(error);
         else {
             res.redirect(`/inventory/details/${req.params.item_id}`);
+        }
+    });
+})
+
+// query to create entries on the inventory page using the form
+const create_inventory_sql = `
+    INSERT INTO Item
+        (class_name, assignment_name, due_date, priority_rating)
+    VALUES
+        (?, ?, ?, ?)
+`
+
+// defines a POST request to create entries in the database
+app.post("/inventory", (req, res) => {
+    db.execute(create_inventory_sql, [req.body.class_name, req.body.assignment_name, req.body.due_date, req.body.priority_rating], (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            //results.insertId has the primary key (id) of the newly inserted element.
+            res.redirect(`/inventory/details/${results.insertId}`);
         }
     });
 })
