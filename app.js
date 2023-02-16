@@ -20,6 +20,7 @@ app.get( "/", ( req, res ) => {
     res.render("homepage");
 } );
 
+// query to read the database information
 const read_inventory_sql = `
     SELECT
         item_id,
@@ -29,7 +30,6 @@ const read_inventory_sql = `
     FROM
         Item
 `
-
 // define a route for the inventory page
 app.get( "/inventory", ( req, res ) => {
     db.execute(read_inventory_sql, (error, results) => {
@@ -40,6 +40,27 @@ app.get( "/inventory", ( req, res ) => {
         }
     });
 } );
+
+// query to delete an entry on the inventory page in the table
+const delete_inventory_sql = `
+    DELETE
+    FROM
+        Item
+    WHERE
+        item_id = ?
+`
+
+// defines a route to delete an entry
+app.get("/inventory/details/:id/delete", (req, res) => {
+    db.execute(delete_inventory_sql, [req.params.id], (error, results) => {
+        if (error)
+            res.status(500).send(error); // Resorts to an internal server error
+        else {
+            res.redirect("/inventory");
+        }
+    });
+})
+
 
 // define a route for the item detail page
 const read_assignment_sql = `
