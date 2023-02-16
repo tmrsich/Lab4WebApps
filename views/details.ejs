@@ -80,85 +80,85 @@
     <!--Modal content-->
     <div id="modal-editinfo" class="modal">
         <div class="modal-content">
-            <table class="modal-table responsive-table" style="width: 100%;">
-                <tr>
-                    <td>
-                        <div class="input-field">
-                            <input id="class-name-input" type="text">
-                            <label for="class-name-input">Class Name</label>
-                        </div>
-                    </td>
-                    
-                    <td>
-                        <div class="input-field">
-                            <input id="assignment-name-input" type="text">
-                            <label for="assignment-name-input">Assignment Name</label>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="input-field">
-                            <input id="assignment-type-input" type="text">
-                            <label for="assignment-type-input">Assignment Type</label>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="input-field">
-                            <input id="assignment-format-input" type="text">
-                            <label for="assignment-format-input">Assignment Format</label>
-                        </div>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <table style="margin: 0; width: 100%;">
+            <form method="post" action="/inventory/details/<%=item_id%>">
+                <table class="modal-table responsive-table" style="width: 100%;">
+                    <tr>
                         <td>
                             <div class="input-field">
-                                <input id="due-date-input" type="date">
+                                <input id="class-name-input" name="class_name_input" type="text" value="<%=class_name%>" required>
+                                <label for="class-name-input">Class Name</label>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="input-field">
+                                <input id="assignment-name-input" name="assignment_name_input" type="text" value="<%=assignment_name%>" required>
+                                <label for="assignment-name-input">Assignment Name</label>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="input-field">
+                                <input id="due-date-input" name="due_date_input" type="text" value="<%=due_date%>" required>
                                 <label for="due-date-input">Due Date</label>
                             </div>
                         </td>
 
                         <td>
                             <div class="input-field">
-                                <input id="priority-rating-input" type="range" min="1" max="10" step="1" style="margin-top: 50px">
+                                <input id="priority-rating-input" name="priority_rating_input" type="range" value="<%=priority_rating%>" min="1" max="10" step="1" style="margin-top: 50px" required>
                                 <label for="priority-rating-input">Priority</label>
                         </td>
+                    </tr>
 
-                        <td>
-                            <div class="input-field">
-                                <input id="interest-level-input" type="range" min="1" max="10" step="1" style="margin-top: 50px">
-                                <label for="interest-level-input">Interest Level</label>
-                            </div>
-                        </td>
-
-                        <td>
-                            <div class="input-field">
-                                <input id="relevance-level-input" type="range" min="1" max="10" step="1" style="margin-top: 50px">
-                                <label for="relevance-level-input">Relevance Level</label>
-                            </div>
-                        </td>
-                    </table>
-                </tr>
-                    <!--Another table because the td element doesn't extend to the 100% width of the outer table-->
-                    <table style="margin: 0; width: 100%;">
-                        <tr>
+                    <tr>
+                        <table style="margin: 0; width: 100%;">
                             <td>
                                 <div class="input-field">
-                                    <input id="description-input" type="text">
-                                    <label for="description-input">Description</label>
+                                    <input id="assignment-type-input" name="assignment_type_input" type="text" value="<%=assignment_type%>">
+                                    <label for="assignment-type-input">Assignment Type</label>
                                 </div>
                             </td>
-                        </tr>
-                    </table>
-                </tr>
-            </table>
-        </div>
 
-        <div class="footer-modal">
-            <a href="#!" class="modal-close save-exit-modal blue lighten-1 waves-effect waves-blue btn-flat">Save & Exit
-            <a href="#!" class="modal-close exit-modal blue lighten-1 waves-effect waves-blue btn-flat">Exit</a>
+                            <td>
+                                <div class="input-field">
+                                    <input id="assignment-format-input" name="assignment_format_input" type="text" value="<%=assignment_format%>">
+                                    <label for="assignment-format-input">Assignment Format</label>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="input-field">
+                                    <input id="interest-level-input" name="interest_level_input" type="range" value="<%=interest_level%>" min="1" max="10" step="1" style="margin-top: 50px">
+                                    <label for="interest-level-input">Interest Level</label>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="input-field">
+                                    <input id="relevance-level-input" name="relevance_level_input" type="range" value="<%=relevance_level%>" min="1" max="10" step="1" style="margin-top: 50px">
+                                    <label for="relevance-level-input">Relevance Level</label>
+                                </div>
+                            </td>
+                        </table>
+                    </tr>
+
+                <!--Another table because the td element doesn't extend to the 100% width of the outer table-->
+                <table style="margin: 0; width: 100%;">
+                    <tr>
+                        <td>
+                            <div class="input-field">
+                                <input id="description-input" name="description_input" type="text" value="<%=description%>">
+                                <label for="description-input">Description</label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                    <div class="footer-modal">
+                        <button class="save-exit-modal blue lighten-1 waves-effect waves-blue btn-flat" type="submit">Submit</button>
+                        <button href="#!" class="modal-close exit-modal blue lighten-1 waves-effect waves-blue btn-flat">Exit</button>
+                    </div>
+            </form>
         </div>
     </div>
 
