@@ -12,5 +12,5 @@ const dbConfig = {
     connectTimeout: parseInt(process.env.DB_CONNECT_TIMEOUT || "10000")
 }
 
-const connectionPool = mysql.createPool(dbConfig);
-module.exports = connectionPool;
+const connection = mysql.createConnection(dbConfig);
+module.exports = connection;

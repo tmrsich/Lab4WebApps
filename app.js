@@ -1,18 +1,17 @@
 //set up the server
 const express = require("express");
-const helmet = require("helmet");
+//const helmet = require("helmet");
 const logger = require("morgan");
 const app = express();
 const port = process.env.PORT || 8080;
 const db = require('./db/db_connection');
-const db = require('./db/db_pool');
 
 // Configure Express to use EJS
 app.set( "views",  __dirname + "/views");
 app.set( "view engine", "ejs" );
 
 // configures the app to use helmet after it has been intialized
-app.use(helmet());
+//app.use(helmet());
 
 // defines middleware that logs all incoming requests
 app.use(logger("dev"));
