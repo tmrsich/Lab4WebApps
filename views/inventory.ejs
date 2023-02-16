@@ -29,15 +29,15 @@
 
     <!--Inventory form to add a new item-->
     <div id="inventory-form">
-        <form class="z-depth-1">
+        <form method="post" action="/inventory" class="z-depth-1">
             <div class="row">
-                    <input id="class-name" name="class-name" type="text" placeholder="Class">
-                    <input id="assignment_name" name="assignment_name" type="text" placeholder="Assignment">
-                    <input id="due-date" name="due-date" type="text" placeholder="Due (MM-DD-YYYY)">
-                    <input id="priority-rating" name="priority-rating" type="text" type="text" placeholder="Priority Rating">
+                    <input id="class-name" name="class_name" type="text" placeholder="Class">
+                    <input id="assignment-name" name="assignment_name" type="text" placeholder="Assignment">
+                    <input id="due-date" name="due_date" type="text" placeholder="Date (MM-DD-YYYY)">
+                    <input id="priority-rating" name="priority_rating" type="text" type="text" placeholder="Priority Rating">
             </div>
+            <input class="btn waves-effect z-depth-2" id="submit-button" type="Submit" style="margin-top: 100px">
         </form>
-        <input class="btn waves-effect z-depth-2" id="submit-button" type="submit" class="submit">
     </div>
 
     <!--Full inventory table with nonfunctional info/edit and delete buttons-->
