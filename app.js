@@ -59,12 +59,12 @@ const read_assignment_sql = `
         item_id = ?
 `
 // define a route for the item detail page
-app.get( "/inventory/details/:id", (req, res) => {
-    db.execute(read_assignment_sql, [req.params.id], (error, results) => {
+app.get( "/inventory/details/:item_id", (req, res) => {
+    db.execute(read_assignment_sql, [req.params.item_id], (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
         else if (results.length == 0)
-            res.status(404).send(`No item found with id = "${req.params.id}"` ); // NOT FOUND
+            res.status(404).send(`No item found with id = "${req.params.item_id}"` ); // NOT FOUND
         else {
             let data = results[0]; // results is still an array
             res.render('details', data);
@@ -82,8 +82,8 @@ const delete_inventory_sql = `
 `
 
 // defines a route to delete an entry
-app.get("/inventory/details/:id/delete", (req, res) => {
-    db.execute(delete_inventory_sql, [req.params.id], (error, results) => {
+app.get("/inventory/details/:item_id/delete", (req, res) => {
+    db.execute(delete_inventory_sql, [req.params.item_id], (error, results) => {
         if (error)
             res.status(500).send(error); // Resorts to an internal server error
         else {
@@ -108,6 +108,46 @@ app.post("/inventory", (req, res) => {
         else {
             //results.insertId has the primary key (id) of the newly inserted element.
             res.redirect(`/inventory/details/${results.insertId}`);
+        }
+    });
+})
+
+// query to update entries on both the inventory and details page
+const update_inventory_sql = `
+    UPDATE
+        Item
+    SET
+        class_name = ?,
+        assignment_name = ?,
+        due_date = ?,
+        priority_rating = ?,
+        assignment_type = ?,
+        assignment_format = ?,
+        interest_level = ?,
+        relevance_level = ?,
+        description = ?
+    WHERE
+        item_id = ?
+`
+// defines a POST request to update entries in the database
+app.post("/inventory/details/:item_id", (req, res) => {
+    db.execute(update_inventory_sql, 
+    [
+        req.body.class_name_input,
+        req.body.assignment_name_input,
+        req.body.due_date_input,
+        req.body.priority_rating_input,
+        req.body.assignment_type_input,
+        req.body.assignment_format_input,
+        req.body.interest_level_input,
+        req.body.relevance_level_input,
+        req.body.description_input,
+        req.params.item_id
+    ], (error, results) => {
+        if (error)
+            res.status(500).send(error);
+        else {
+            res.redirect(`/inventory/details/${req.params.item_id}`);
         }
     });
 })
