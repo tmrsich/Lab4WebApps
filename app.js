@@ -1,5 +1,5 @@
 //set up the server
-const express = require( "express" );
+const express = require("express");
 const logger = require("morgan");
 const app = express();
 const port = 8080;
@@ -9,32 +9,40 @@ const db = require('./db/db_connection');
 app.set( "views",  __dirname + "/views");
 app.set( "view engine", "ejs" );
 
-// define middleware that logs all incoming requests
+// defines middleware that logs all incoming requests
 app.use(logger("dev"));
 
-// define middleware that serves static resources in the public directory
+// defines middleware that serves static resources in the public directory
 app.use(express.static(__dirname + '/public'));
 
 // configures Express to parse URL-encoded POST request bodies (traditional forms)
 app.use( express.urlencoded({ extended: false }) );
 
 // define a route for the default home page
-app.get( "/", ( req, res ) => {
+app.get( "/", (req, res) => {
     res.render("homepage");
 } );
 
+// query to create entries on the inventory page using the form
+const create_inventory_sql = `
+    INSERT INTO Item
+        (class_name, assignment_name, due_date, priority_rating)
+    VALUES
+        (?, ?, ?, ?)
+        
+`
 // query to read the database information
 const read_inventory_sql = `
     SELECT
         item_id,
         class_name, assignment_name, assignment_type, assignment_format,
-        due_date, priority_rating, interest_level, relevance_level,
+        DATE_FORMAT(due_date, "%m-%d-%Y") AS "due_date", priority_rating, interest_level, relevance_level,
         description
     FROM
         Item
 `
 // define a route for the inventory page
-app.get( "/inventory", ( req, res ) => {
+app.get( "/inventory", (req, res) => {
     db.execute(read_inventory_sql, (error, results) => {
         if (error) {
             res.status(500).send(error); // Internal Server Error
@@ -79,7 +87,7 @@ const read_assignment_sql = `
         item_id = ?
 `
 // define a route for the item detail page
-app.get( "/inventory/details/:id", ( req, res ) => {
+app.get( "/inventory/details/:id", (req, res) => {
     db.execute(read_assignment_sql, [req.params.id], (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
