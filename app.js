@@ -23,14 +23,6 @@ app.get( "/", (req, res) => {
     res.render("homepage");
 } );
 
-// query to create entries on the inventory page using the form
-const create_inventory_sql = `
-    INSERT INTO Item
-        (class_name, assignment_name, due_date, priority_rating)
-    VALUES
-        (?, ?, ?, ?)
-        
-`
 // query to read the database information
 const read_inventory_sql = `
     SELECT
@@ -41,6 +33,7 @@ const read_inventory_sql = `
     FROM
         Item
 `
+
 // define a route for the inventory page
 app.get( "/inventory", (req, res) => {
     db.execute(read_inventory_sql, (error, results) => {
@@ -51,6 +44,33 @@ app.get( "/inventory", (req, res) => {
         }
     });
 } );
+
+// define a route for the item detail page
+const read_assignment_sql = `
+    SELECT
+    item_id,
+    class_name, assignment_name, assignment_type, assignment_format,
+    DATE_FORMAT(due_date, "%m-%d-%Y") AS "due_date", priority_rating, interest_level, relevance_level,
+    description
+
+    FROM
+        Item
+    WHERE
+        item_id = ?
+`
+// define a route for the item detail page
+app.get( "/inventory/details/:id", (req, res) => {
+    db.execute(read_assignment_sql, [req.params.id], (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else if (results.length == 0)
+            res.status(404).send(`No item found with id = "${req.params.id}"` ); // NOT FOUND
+        else {
+            let data = results[0]; // results is still an array
+            res.render('details', data);
+        }
+    });
+});
 
 // query to delete an entry on the inventory page in the table
 const delete_inventory_sql = `
@@ -72,33 +92,25 @@ app.get("/inventory/details/:id/delete", (req, res) => {
     });
 })
 
-
-// define a route for the item detail page
-const read_assignment_sql = `
-    SELECT
-    item_id,
-    class_name, assignment_name, assignment_type, assignment_format,
-    due_date, priority_rating, interest_level, relevance_level,
-    description
-
-    FROM
-        Item
-    WHERE
-        item_id = ?
+// query to create entries on the inventory page using the form
+const create_inventory_sql = `
+    INSERT INTO Item
+        (class_name, assignment_name, due_date, priority_rating)
+    VALUES
+        (?, ?, STR_TO_DATE(?, "%Y-%m-%d"), ?)
 `
-// define a route for the item detail page
-app.get( "/inventory/details/:id", (req, res) => {
-    db.execute(read_assignment_sql, [req.params.id], (error, results) => {
+
+// defines a POST request to create entries in the database
+app.post("/inventory", (req, res) => {
+    db.execute(create_inventory_sql, [req.body.class_name, req.body.assignment_name, req.body.due_date, req.body.priority_rating], (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
-        else if (results.length == 0)
-            res.status(404).send(`No item found with id = "${req.params.id}"` ); // NOT FOUND
         else {
-            let data = results[0]; // results is still an array
-            res.render('details', data);
+            //results.insertId has the primary key (id) of the newly inserted element.
+            res.redirect(`/inventory/details/${results.insertId}`);
         }
     });
-});
+})
 
 // start the server
 app.listen( port, () => {
