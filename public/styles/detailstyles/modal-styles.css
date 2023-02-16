@@ -1,3 +1,10 @@
+#other-buttons {
+    display: flex;
+    margin: auto;
+    justify-content: space-evenly;
+    width: 85%;
+}
+
 .modal {
     margin-top: 2.5%;
     width: 90%;
