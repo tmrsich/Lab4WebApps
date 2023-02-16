@@ -15,6 +15,9 @@ app.use(logger("dev"));
 // define middleware that serves static resources in the public directory
 app.use(express.static(__dirname + '/public'));
 
+// configures Express to parse URL-encoded POST request bodies (traditional forms)
+app.use( express.urlencoded({ extended: false }) );
+
 // define a route for the default home page
 app.get( "/", ( req, res ) => {
     res.render("homepage");
